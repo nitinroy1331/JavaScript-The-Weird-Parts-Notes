@@ -56,12 +56,18 @@ Below is a list of notes made for the course JavaScript: The Weird Parts.
 ### Syntax Parser
 - A program that reads your code and determines what it does, and if the
 grammar is valid.
+ When you write JavaScript it isn't directly telling computer what to do. You're writing code, but then someone else built programs that convert your JS into something that computer can understand. Those programs are called compilers or interpreters.
+
+**Compilers** go character by character and translate your code into a set of instructions. Important to understand is that during that process programmers who wrote that compiler can choose to do extra stuff. Your code is not what actually is given to a computer but a translation of it.
 
 ### Lexical Environment
 - Where something sits physically in the code you write, the positioning, where
-is it contained
+is it contained and what surrounds it. In JavaScript where you write something is important.
 
-### Execution Context
+### Execution Contexta wrapper to help manage the code that is running.
+There are lots of lexical environments, areas of the code that you look at physically, but which one is currently running is managed via execution contexts.
+Execution context contains your running code, but it can also contain things beyond what you've written in your code. Because remember that your code is being translated by a syntax parser.
+
 - A wrapper to help manage the code that is currently running
 - The environment of the code being executed
 - Basically the scope of the code
@@ -77,20 +83,44 @@ function a() {
 }
 ```
 
+## 6 - Conceptual Aside - Name-Value Pairs and Objects
 ### Name/Value Pair
 - A name which maps to a unique value, can be defined more than once, but can
-have only one value in any given context
+have only one value in any given execution context
 
 ### Object
 - A collection of Name/Value pairs, a function also counts as a value
 - If the value is a primitive, it's called a property.
 - If the value is a function, it's called a method.
 
+The Global Environment and The Global Object
+**Global execution context** - the base execution context. It creates global object and special variable called `this`. In a browser `this` global object is `window`.
+
 ### Hoisting
 - Setup memory space for variables and functions
 - Memory space is allocated for functions and variables, but variables are not
 yet defined. All values in JS are set initially to undefined.
 - Avoid using hoisting. Always declared methods and variables before using them.
+- because of the way JS works, you can write in your code a call to a function before an actual function and it will execute without any errors. 
+
+```javascript
+b();
+
+function b() {
+	console.log('This works!');
+}
+```
+
+When parser runs through code it recognizes where you created variables and functions and it sets up memory space for them. So before your code begins to be executed, JS engine has already set aside memory space for all the variables and functions you created. When the code begins to execute line by line it can access it.
+
+However, for variables JS engine puts a placeholder `undefined`, because it doesn't know what it's value will ultimately end up being until it starts executing that line of
+code.
+ 
+```javascript
+console.log(a);
+
+var a = 'Hello World!';
+```
 
 ### Phases of execution context inside JavaScript
 1. Creation of variables and functions in memory
