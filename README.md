@@ -126,24 +126,45 @@ var a = 'Hello World!';
 1. Creation of variables and functions in memory
 2. Execution phase
 
+ Conceptual Aside - Javascript and undefined
+**`undefined`** - is a special value, a keyword that JavaScript sets up to all variables during a creation phase of execution context.
+
 ### JavaScript is single threaded, synchronous execution
 - Means that it can only execute one instruction at a time in the order that it
 appears.
 - Asynchronous events are actually handled synchronously.
+**Single threaded** - JavaScript is a single threaded, synchronous language. That means one command execution at a time. Maybe not under the hood of the browser but from our perspective as programmers it is single threaded.
+**Synchronous execution** - means one at a time and in order that it appears. 
 
-### Invocation
-- Running a function, invoking a function
-
+## 12 - Function Invocation and the Execution Stack
+**Invocation** - running or calling a function by using parenthesis `()`.
 ### Execution Stack
+every time you invoke a function a new execution context is created for that function and is put on top of execution stack.
 - When the script is run, the global execution context is created, and is
 executed.
 - However, if there is another function invocation, it will stop at that line
 of code, and create and execute the execution context.
+# 13 - Functions, Context, and Variable Environments
+**Variable environments** - where the variables live and how they relate to each other in memory. Every execution context has its own variable environment.
 
-### Variable environment
-- Where the variables live, and how they relate to each other in memory
+## 14 - The Scope Chain
+If JavaScript engine doesn't find variable in it's own environment it looks in the outer environment. That whole process of searching of variable in outer lexical environments down the chain is called the **scope chain**.
 
-### Scope Chain
+So in this example `myVar` would actualy log `1` even though it sits inside a function which is inside another. `myVar` sits in the outer global environment so JS will go down the scope chain until it finds it.
+
+```javascript
+function a() {
+    
+    function b() {
+        console.log(myVar);
+    }
+    
+	b();
+}
+
+var myVar = 1;
+a();
+```
 - A scope is Where a variable is available in your code, and if it's truly the
 same copy, or a new one.
 - Basically what scope contains what scope/variables
@@ -175,6 +196,11 @@ function a() {
 var myVar = 1;
 a();
 ```
+## 15 - Scope, ES6, and `let`
+**Scope** - where a variable is available in your code. And if it's truly a new variable, or a new copy.
+
+**`let`** - allows JS engine block scoping. During execution context that variable is still placed in memory and set to `undefined`, however, you're not allowed to use it until the line of code is run during the execution phase. So if you try to use a variable before, you'll get an error. Also, it is declared within a block. A block is usually defined by `{}` (function, if statement etc). So if you're running `let` inside a loop a new variable will be placed in memory after each iteration.
+
 
 ### Event Queue
 - Beside the scope chain list, there is also another list, called the event
@@ -188,6 +214,10 @@ empty.
 to handle that specific event.
 - If there is function to handle an event, the function is added to the
 execution stack.
+## 16 - What About Asynchronous Callbacks
+**Asynchronous** - executed more than one at a time. What is happening inside JS engine is synchronous. Its just the browser is putting things asynchronously in the event queue.
+
+**Event queue** - events like click and others are placed in the queue. And this queue starts to get processed in the order it happened only when execution stack is empty.
 
 ## 02. Types and Operators
 ### Dynamic Typing
@@ -218,22 +248,27 @@ even be changed after the variable is declared.
       - A ***symbol*** is used in ES6
 
 ### Operator
+a special function that is written differently. Generally operators take two parameters and return result.
 - Is a special function that is syntactically different.
 - JavaScript operators are infix notations.
 - Operators are actually just functions.
 
 ### Operator Precedence
+ which operator function gets called first on the same line of code. Functions are called in order of precedence (higher precedence wins).
 - Decides which operator function gets called first.
 
 ### Associativity
 - Decides what order operator functions get called, be it left-to-right , or
-right-to-left.
+right-to-left if they have same level of precedence
 - [Mozilla Developer Network on Associativity](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Operator_Precedence#Associativity)
-
+## 21 - Conceptual Aside Coercion
 ### Coercion
 - **Coercion** is converting a value from one data type to another.
 - Also known as type casting.
-
+This happens quite often in JavaScript because it's dynamically typed. For example adding a number to a string would result in number being converted to a string:
+```javascript
+7 + '7'// would be = '77'
+ ```
 ### Short Circuiting
 - Because logical expressions are evaluated from left to right, they are tested
 for possible '**short-circuit**' evaluation using the following rules:
@@ -272,12 +307,54 @@ function plusOne(num) {
 // This statement will return 2, if you pass in a falsey value such as 0
 plusOne(0);
 ```
+## 22 - Comparison Operators
+When `true` is coerced to number it is `1`.
+
+When `false` is coerced to number it is `0`.
+
+When `null` is coerced to number it is `0`.
+
+When `undefined` is coerced to number it is `NaN`.
+
+`===` is a strict comparison operator and doesn't do conversion. So it's the best practice to always use it to prevent strange bugs due to conversion.
+## 23 - Existence and Booleans
+`undefined`, `null` and `''`(empty strings) is converted to boolean `false`.
+
+We can use that to our advantage. This pattern is used in many JS libraries and good open source code. 
+Whatever is in parenthesis of if statement it is converted to a boolean. 
+So this statement returns `true` if `a` is set or `false` if not.
+
+```javascript
+var a;
+
+if (a) {
+	console.log('Something is there.');
+}
+```
+Also worth mentioning that `false || true` returns `true.` 
+
+## 24 - Default Values
+If you pass two values to `||` operator it will return a first one which returns `true`.
+
+This pattern is used in many open source code:
+
+```javascript
+var name = name || "your name";
+``` 
+
+This way you can set a default parameter value in case no arguments are passed during invocation of a function.
 
 ### Frameworks
 - When you include several JavaScript files inside a HTML file, the browser
 does not actually create new execution contexts. Instead, the JavaScript files
 must be executed in order.
+## 25 - Framework Aside: Default Values
+When using a few libraries to avoid overwriting vars, most libraries use this pattern:
 
+```javascript
+window.variableName = window.variableName || "String";
+``` 
+notes till here
 ## 03. Objects and Functions
 ### Namespace
 - Is a container for variables and functions
