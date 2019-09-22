@@ -339,6 +339,38 @@ window.variableName = window.variableName || "String";
 ``` 
 notes till here
 ## 03. Objects and Functions
+## 26 - Objects and the Dot
+**Objects** are name value pairs that are sitting in memory and have references to other things inside them like properties and methods.
+
+Object can have a primitive(string, boolean) and that will be called a **property**. It can have another object and it will also be a property.
+
+Object can also contain a function and it is called a **method**.
+
+
+```javascript
+var person = new Object();
+person['firstName'] = 'Jason';
+
+person.address = "111 Main St.";
+```
+
+Since `firstName` doesn't exist on person object, we create it using brackets operator and give a value to it (property).
+Dot is an operator that works from left to right. It allows to access or set an object's properties.
+
+## 27 - Objects and Object Literals
+Object literal syntax is more clean and preferred way to create objects.
+
+```javascript
+var Jason = { 
+    firstname: 'Jason', 
+    lastname: 'Baciulis',
+    address: {
+        street: '111 Main St.',
+        city: 'New York',
+        state: 'NY'
+    }
+};
+```
 ### Namespace
 - Is a container for variables and functions
 - Uses an object in JavaScript
@@ -354,6 +386,20 @@ spanish.greet = 'Hola!';
 ```
 
 ### First Class Functions
+**First class functions** - everything you can do with other types you can do with functions. Assign them to variables, pass them around as parameters to other functions, you can create functions on the fly.
+
+Just like any object, function object resides in memory. Though, it's a special type of object because it has all the features of a normal object but has some other special properties. It's hidden special properties:
+
+**Name** - though it can be anonymous ant not have a name.
+
+**Code property** - where the actual lines of code sit.
+
+The code that you write gets placed in the special property of the function object. So it isn't like the code you write *is* a function. The function *is* an object with other properties. And the code that you write is just one of those properties that you're adding onto it. What is special about that property that it's invocable. You can say run that code and that's when execution context creation and execution happens.
+
+It's important that you have this mental model of functions in your mind. You have to think of functions as objects whose code just happens to be one of the properties. 
+There are other things that functions can have attached to it. And it can be moved around and copied just like other object.
+
+You have to think about **functions as more than just containers of code**.
 - You can do everything to them that you can do with other types.
 - E.g.
   - Being assigned to a variable
@@ -368,7 +414,32 @@ attach additional functions, variables, and even objects to it.
 - A function is actually just an object, whose code just happens to be one of
 the properties attached to the object.
 
-### Expression vs Statement
+### Expression vs Statement**Expression** - a unit of code that results in a value. Statements just do work, bet expressions end up creating value. That value doesn't necessarily have to be saved to a variable.
+
+E.g. `1 + 2` is a function expression that return a value of `3`. Do you remember how we covered that `+` operator is a function?
+
+This is regular function statement:
+
+```javascript
+function greet() {
+	console.log('hi');
+}
+```
+
+It is put into memory. But it doesn't return a value until a function is invocated.
+
+This is expression:
+
+```javascript
+var anonymousGreet = function() {
+	console.log('hi');
+}
+```
+
+Remember functions are objects. So it creates an object on the fly and sets it equal to the variable `anonymousGreet`. So when your code runs in the execution phase, sees the first function it just says "yeah there is function" and does nothing, just keeps going. But when it sees a variable it results in a value of a function object being created.
+That's why you can call function statement before it but function expression will throw an error as "undefined is not a function" because that function is not yet created.
+
+
 - An ***expression*** Is a unit of code that results in a value
 - A ***statement*** a unit of code that does not result in a value
 - E.g.
@@ -387,7 +458,7 @@ var anonymousGreet  = function() {
   console.log('hello');
 }
 ```
-
+notes123
 ### Pass-by-value and pass-by-reference
 - Primitive data types are pass-by-value, whereas objects are pass-by-reference
 
