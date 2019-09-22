@@ -138,23 +138,7 @@ of code, and create and execute the execution context.
 **Variable environments** - where the variables live and how they relate to each other in memory. Every execution context has its own variable environment.
 
 ## - The Scope Chain
-- If JavaScript engine doesn't find variable in it's own environment it looks in the outer environment. That whole process of searching of variable in outer lexical environments down the chain is called the **scope chain**.
 
-So in this example `myVar` would actualy log `1` even though it sits inside a function which is inside another. `myVar` sits in the outer global environment so JS will go down the scope chain until it finds it.
-
-```javascript
-function a() {
-    
-    function b() {
-        console.log(myVar);
-    }
-    
-	b();
-}
-
-var myVar = 1;
-a();
-```
 - If the variable is not found inside the execution context, it will search for
 the variable inside the outer lexical environment. If it is not found inside
 the inside the outer lexical environment, then it will go up the scope chain
