@@ -55,7 +55,7 @@ Below is a list of notes made for the course JavaScript: The Weird Parts.
 ## Execution Contexts and Lexical Environments
 ### Syntax Parser
 - A program that reads your code and determines what it does, and if the
-grammar is valid.
+grammar/syntax is valid.
 -When you write JavaScript it isn't directly telling computer what to do. You're writing code, but then someone else built programs that convert your JS into something that computer can understand. Those programs are called compilers or interpreters.**Compilers** go character by character and translate your code into a set of instructions. Important to understand is that during that process programmers who wrote that compiler can choose to do extra stuff. Your code is not what actually is given to a computer but a translation of it.
 
 ### Lexical Environment
