@@ -52,7 +52,7 @@ Below is a list of notes made for the course JavaScript: The Weird Parts.
     + [Object.create and Pure Prototypal Inheritance](#objectcreate-and-pure-prototypal-inheritance)
     + [ES6 and Classes](#es6-and-classes)
 
-## Execution Contexts and Lexical Environments
+## 1.1 Execution Contexts and Lexical Environments
 ### Syntax Parser
 - A program that reads your code and determines what it does, and if the
 grammar/syntax is valid.
@@ -77,7 +77,7 @@ function a() {
   var myVar = 5;
 }
 ```
-## Conceptual Aside - Name-Value Pairs and Objects
+## 1.2 Conceptual Aside - Name-Value Pairs and Objects
 ### Name/Value Pair
 - A name which maps to a unique value, can be defined more than once, but can
 have only one value in any given execution context
@@ -86,7 +86,7 @@ have only one value in any given execution context
 - A collection of Name/Value pairs, a function also counts as a value
 - If the value is a primitive, it's called a property.
 - If the value is a function, it's called a method.
-## The Global Environment and The Global Object
+## 3.The Global Environment and The Global Object
 **Global execution context** - the base execution context. It creates global object and special variable called `this`. In a browser `this` global object is `window`.
 
 ### Hoisting
@@ -126,7 +126,7 @@ var a = 'Hello World!';
 - Asynchronous events are also actually handled synchronously.
 **Synchronous execution** - means one at a time and in order that it appears. 
 
-## - Function Invocation and the Execution Stack
+## 1.3 Function Invocation and the Execution Stack
 **Invocation** - running or calling a function by using parenthesis `()`.
 ### Execution Stack
 -every time you invoke a function a new execution context is created for that function and is put on top of execution stack.
@@ -137,7 +137,7 @@ of code, and create and execute the execution context.
 # - Functions, Context, and Variable Environments
 **Variable environments** - where the variables live and how they relate to each other in memory. Every execution context has its own variable environment.
 
-## - The Scope Chain
+## 1.4 The Scope Chain
 
 - If the variable is not found inside the execution context, it will search for
 the variable inside the outer lexical environment. If it is not found inside
@@ -146,7 +146,7 @@ until it finds the variable, or when it reached the global execution context.
 - Note that just because your execution context is on top of another in the
 scope chain, it does not mean that it the one on the bottom is necessarily its
 parent.
-- An example:
+- An example:So in this example `myVar` would actualy log `1` even though it sits inside a function which is inside another. `myVar` sits in the outer global environment so JS will go down the scope chain until it finds it.
 
 ```JavaScript
 // global context
@@ -167,28 +167,20 @@ function a() {
 var myVar = 1;
 a();
 ```
-## - Scope, ES6, and `let`
+## 1.5 Scope, ES6, and `let`
 **Scope** - where a variable is available in your code. And if it's truly a new variable, or a new copy.
 
 **`let`** - allows JS engine block scoping. During execution context that variable is still placed in memory and set to `undefined`, however, you're not allowed to use it until the line of code is run during the execution phase. So if you try to use a variable before, you'll get an error. Also, it is declared within a block. A block is usually defined by `{}` (function, if statement etc). So if you're running `let` inside a loop a new variable will be placed in memory after each iteration.
 
 
-## 16 - What About Asynchronous Callbacks
+## 1.6 What About Asynchronous Callbacks
+What About Asynchronous Callbacks
 **Asynchronous** - executed more than one at a time. What is happening inside JS engine is synchronous. Its just the browser is putting things asynchronously in the event queue.
 
 **Event queue** - events like click and others are placed in the queue. And this queue starts to get processed in the order it happened only when execution stack is empty.
-- The event queue is populated with events, or populated events that we want to
-be notified of.
-- We can listen for events, and let a function handle that specific event.
-- The event queue is only periodically looked at when the execution stack is
-empty.
-- If an event is in the event queue, JS checks if there is a specific function
-to handle that specific event.
-- If there is function to handle an event, the function is added to the
-execution stack.
 
 
-## 02. Types and Operators
+## 2.1 Types and Operators
 ### Dynamic Typing
 - The type of variable does not need to be defined, it is automatically
 determined in runtime.
@@ -197,22 +189,18 @@ even be changed after the variable is declared.
 
 ### Primitive Type
 - A type of data that represents a single value.
-- There are not objects as they do not contain Name-Value pairs.
+- These are not objects as they do not contain Name-Value pairs.
 - List of primitive data types:
   1. Undefined
-    - ***undefined*** represents a lack of existence, you should not assign a
-    variable to this.
+    - ***undefined*** represents a lack of existence, you should not assign a variable to this.
   2. Null
-    - ***null*** also represents a lack of existence, but you can set a
-    variable to this.
+    - ***null*** also represents a lack of existence, but you can set a variable to this.
   3. Boolean
     - ***boolean*** is either *true* or *false*
   4. Number
-    - A ***number*** is a floating point number. There is only one type of
-    floating type number inside JavaScript.
+    - A ***number*** is a floating point number. There is only one type of floating type number inside JavaScript.
   5. String
-     - A ***String*** is a sequence of characters, and single quotes and
-     double quotes can both be used to contain strings.
+     - A ***String*** is a sequence of characters, and single quotes and double quotes can both be used to contain strings.
     6. Symbol
       - A ***symbol*** is used in ES6
 
@@ -223,7 +211,7 @@ even be changed after the variable is declared.
 
 ### Operator Precedence
  which operator function gets called first on the same line of code. Functions are called in order of precedence (higher precedence wins).
-- Decides which operator function gets called first.
+
 
 ### Associativity
 - Decides what order operator functions get called, be it left-to-right , or
@@ -274,7 +262,7 @@ function plusOne(num) {
 // This statement will return 2, if you pass in a falsey value such as 0
 plusOne(0);
 ```
-## 22 - Comparison Operators
+## 2.2 - Comparison Operators
 When `true` is coerced to number it is `1`.
 
 When `false` is coerced to number it is `0`.
@@ -284,7 +272,7 @@ When `null` is coerced to number it is `0`.
 When `undefined` is coerced to number it is `NaN`.
 
 `===` is a strict comparison operator and doesn't do conversion. So it's the best practice to always use it to prevent strange bugs due to conversion.
-## 23 - Existence and Booleans
+## 2.3 - Existence and Booleans
 `undefined`, `null` and `''`(empty strings) is converted to boolean `false`.
 
 We can use that to our advantage. This pattern is used in many JS libraries and good open source code. 
@@ -300,7 +288,7 @@ if (a) {
 ```
 Also worth mentioning that `false || true` returns `true.` 
 
-## 24 - Default Values
+## 2.4 - Default Values
 If you pass two values to `||` operator it will return a first one which returns `true`.
 
 This pattern is used in many open source code:
@@ -312,7 +300,7 @@ var name = name || "your name";
 This way you can set a default parameter value in case no arguments are passed during invocation of a function.
 
 
-## 25 - Framework Aside: Default Values
+## 2.5 - Framework Aside: Default Values
 When using a few libraries to avoid overwriting vars, most libraries use this pattern:
 ### Frameworks
 - When you include several JavaScript files inside a HTML file, the browser
@@ -321,9 +309,9 @@ must be executed in order.
 ```javascript
 window.variableName = window.variableName || "String";
 ``` 
-notes till here
-## 03. Objects and Functions
-## 26 - Objects and the Dot
+
+## 3 Objects and Functions
+## 3.1 - Objects and the Dot
 **Objects** are name value pairs that are sitting in memory and have references to other things inside them like properties and methods.
 
 Object can have a primitive(string, boolean) and that will be called a **property**. It can have another object and it will also be a property.
@@ -356,18 +344,22 @@ var Jason = {
 };
 ```
 ### Namespace
-- Is a container for variables and functions
-- Uses an object in JavaScript
-
+- a container for variables and functions. Typically to keep variables and functions with the same name separate.
+You can prevent name collisions by using objects to store properties:
 ```JavaScript
 
 var english = {};
 var spanish = {};
 
 english.greet = 'Hello!';
-spanish.greet = 'Hola!';
-
+spanish.greet = 'Hola!'; JSON and Object Literals
 ```
+JSON and Object Literals
+**JSON** - JavaScript object notation is inspired by JS. In JSON property names must be wrapped in double quotes.
+
+`JSON.stringify(objectLiteral)` - converts object to JSON.
+
+`JSON.parse()` - converts to a JavaScript object.
 
 ### First Class Functions
 **First class functions** - everything you can do with other types you can do with functions. Assign them to variables, pass them around as parameters to other functions, you can create functions on the fly.
@@ -426,25 +418,30 @@ That's why you can call function statement before it but function expression wil
 
 - An ***expression*** Is a unit of code that results in a value
 - A ***statement*** a unit of code that does not result in a value
-- E.g.
 
-```JavaScript
-// The function greet here is just a statement, because it does not return a
-// value when evaluated.
-function greet() {
-  console.log('hi');
-}
-
-// This is an anonymous function, it is just a function without a name
-// In this case, the function here is an expression, because it returns a
-// value when evaluated, which is the function object
-var anonymousGreet  = function() {
-  console.log('hello');
-}
-```
-notes123
 ### Pass-by-value and pass-by-reference
 - Primitive data types are pass-by-value, whereas objects are pass-by-reference
+Conceptual Aside By Value vs By Reference
+**By value** (primitives):
+
+```javascript
+var a = 3; b = a;
+``` 
+
+When you set `b` equals to `a`, equals operator sees these are primitives creates a new spot in memory and makes a copy of it. `b` and `a` will be both `3` but they are copies sitting on separate spots in memory. So if I change `a = 5` it doesn't affect `b`, it is still `3`, because after making a copy these values are on their own.
+
+**By reference** (all objects including functions):
+
+```javascript
+var c = {greetings: 'hi'};
+var d;
+d = c;
+```
+Equals operator sees there is an object so it simply points to the same spot in memory.
+
+After changing a value of an object: `c.greetings = 'hello'` `d` would change as well.
+
+**Mutate** means change something.
 
 ### Objects, Functions, and 'this'
 - When a function is invoked, a new execution context is invoked. When the
