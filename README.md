@@ -930,6 +930,16 @@ output data from input data.
 
 ## 04. Object-Oriented JavaScript and Prototypal Inheritance
 ### Prototypal Inheritance
+**Inheritance** - one object gets access to properties and methods of another object.
+
+**Classical inheritance** is the way it's been done a long time, it's what Java, C# uses. It's very verbose.
+
+**Prototypal** is much simpler, flexible, extensible, easy to understand.
+
+## 50 - Understanding The Prototype
+All objects have built-in prototype property, including functions. Each prototype can also have its own prototype.
+
+Each object inherits properties and methods of other objects through a prototype. So if you call a property on one object and it doesn't find it there it goes the prototype chain and looks for it on a prototype.
 - ***Inheritance*** is when one object gets access to the properties and
 methods of another object.
 - In prototypal inheritance, each object has its **\__proto__** property,
@@ -957,9 +967,20 @@ var getCookies = function() {
 getCookies.bind(this);
 
 ```
+Everything is an Object (Or a primitive)
+Functions, arrays, and objects all have their prototype that's why we say that everything is an object in JavaScript.
+
+All objects, functions, arrays have their prototype pointing to the special object where you can access methods like `call()`, `bind()`, `push()`. 
+
+
 ### Reflection and Extend
 - ***Reflection*** means that an **object** can look at itself, and it can list
 and change its properties and methods.
+*Reflection** - an object can look at itself, listing and changing its properties and methods.
+
+`extend(obj, obj2, obj3)` takes all properties and methods of given objects and passes them to the first object.
+
+It is not a built in feature but many libraries have it and ES6 have `extends`.
 
 ```JavaScript
 var person = {
