@@ -459,6 +459,13 @@ always point to the global object, the **Window** object.
 point to the object itself.
 - However, the '***this***' keyword when used inside a function inside a method
 inside an object, will point back to the global object.
+`this` inside a function points to global object.
+
+`this` inside a method points to that object from which it is called. Left of the dot rule.
+
+But `this` inside a function which is inside a method will point to the global object.
+
+With ES5 JavaScript using `var` you could solve this by setting inside a method `var _this = this;` which is a very common pattern.
 
 ```JavaScript
 // To be updated
@@ -479,13 +486,31 @@ c.log();
 ```
 
 ### 'arguments' and REST
-- **Arguments** are the parameters that you pass to a function
+ Arrays  - Collections of Anything
+**Arrays** can hold a mix of anything: functions, primitives, objects.
+
+**Arguments** are the parameters you pass to a function. JS creates a keyword of the same name which is an array-like that contains all parameters that you passed.
+
+In ES6 we can do: `function greet(firstname, ...other)` and `other` will be an array that contains the rest of the arguments.
+
 - When an execution context is created, JavaScript creates the variable
 environment, outer environment, this, and ***arguments***.
 - The ***arguments*** variable is actually an array, and it contains all the
 arguments that you have passed to the function.
 - The rest operator takes the arguments that aren't defined specifically, and
 get wrapped into an array.
+##  - Framework Aside Function Overloading
+You can call one function which inside calls another function with a certain set of parameters.
+
+##  - Conceptual Aside  - Syntax Parsers
+JavaScript engine is syntax parser in the browser.
+
+##  - Dangerous Aside Automatic Semicolon Insertion
+Semicolons are optional in JS because JS engine injects them automatically.
+But it is a bad practice to not put them because you want to know what code you are writing.
+
+## - Framework Aside Whitespace
+**Whitespace** - invisible characters that create space in your code: returns, tabs, space.
 
 ### Immediately Invoked Function Expressions (IIFE)s
 - IIFEs are function expressions that are immediately invoked once they are
@@ -525,7 +550,30 @@ statement, but creating a new expression instead.
 - By wrapping code in an IIFE, we can ensure that our code does not pollute
 the global namespace. (Like in any other normal function)
 
+Framework Aside IIFEs and Safe Code
+**IIFE** creates a new execution context so it's safe code because it is wrapped in separate execution context and prevents variable names collision.
+Wrapping code libraries is very common pattern to not clash code with the global object.
+You can reference to global object by passing `window` as a parameter.
+
 ### Closures
+When a function runs and completes it is removed from execution stack, but variables created and saved in that execution phase are still stored in memory and can be accessed from down the scope.
+
+```javascript
+function greet(whattosay) {
+
+   return function(name) {
+	   console.log(whattosay + ' ' + name;
+   }
+	
+}
+
+var sayHi = greet('Hi');
+sayHi('Jason');
+```
+
+Inside the variable `sayHi` we run `greet` function which returns another function and passes string `'Hi'`. After that functions is finished and it is popped from the execution stack. But `whattosay` variable still sits saved in the memory with a value `Hi`. So when we call function `sayHi` it will go in the outer environment and look for whattosay variable and will find it and log "Hi Jason".
+We describe this proccess as execution context has closed in outer variables.
+
 - A ***closure*** is the combination of a function and the lexical environment
 within which that function was declared.
 - It refers to a function having access to variables that it would normally
@@ -698,6 +746,20 @@ attributes:
   3. ***call()***
   4. ***apply()***
   5. ***bind()***
+  **Callback function** - a function you give to another function to be run when the other function is finished.
+
+## 46 - `call()`, `apply()`, and `bind()`
+Because functions are objects, all functions have access to built-in `call()`, `bind()` and `apply()` methods.
+
+**`bind()`** creates a copy of a function it is attached to. E.g. `name.bind(obj)` inherits `this` from the object you pass to it as a parameter. `bind()` can also bind permanent parameters to the function: `name.bind(this, 1, 2)`. So when you call `name()` it will have parameters `1` and `2` already passed.
+
+**`call()`** invokes the function but also lets you to decide what `this` variable will be, by passing an object: `call(object, 'param', 'param2')`. Unlike bind, it executes the function instead of copying it.
+
+**`apply()`** is almost the same as `call()` but instead you need to pass an array as a parameter: `.apply(object, [parameters])`
+
+In practice, you can use `call()` and `apply()` to borrow methods/functions from objects and use on another object with the same property names.
+
+**Function currying** - creating a copy of a function but with some preset parameters.
 - Bind is used when you want to change the reference of this for a function
 - It creates a copy of your function, and whatever object you pass to the bind
 method, becomes the object that the '***this***' keyword points to.
@@ -794,6 +856,23 @@ console.log(curriedMultiply(5)(10)(3));
 ```
 
 ### Functional Programming
+A mapping function is a function which takes one array and outputs another array. It is very powerful and useful technique that you will see in codebases.
+
+```javascript
+function mapForEach(arr, fn) {
+    
+    var newArr = [];
+    for (var i=0; i < arr.length; i++) {
+        newArr.push(
+            fn(arr[i])   
+        )
+    };
+    
+    return newArr;
+}
+```
+
+You should avoid mutating/changing things. That's why it is better to return a new array than change existing one.
 - Functional programming is a programming style where you think and code in
 terms of functions
 - Functional programming languages are languages that have first-class functions
