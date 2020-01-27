@@ -1038,7 +1038,11 @@ function (The prototypes of the function are actually accessed using the
 **\__proto__** keyword).
 - Instead, ***prototype*** is actually the prototype of any objects created
 using the function constructor.
+**`.prototype`** is a property that sits in every function in JavaScript but unless you use a function constructor with `new` operator it is never used.
 
+A `.prototype` is **not** *the* prototype of a function object. It is only a prototype of objects created with a `new` keyword.
+
+It's better to put your methods on the `prototype` to save memory space as it gets shared between all objects.
 ```JavaScript
 function Person(firstname, lastname) {
   console.log(this);
@@ -1083,10 +1087,20 @@ function constructor will return ***undefined***. Hence, an error will be
 thrown when you try to access the uncreated object.
 - As a rule of thumb, any function that is intended to be used as a function
 constructor, should start with a capital letter.
+Any function that we intend to use as a function constructor should be named with a first capital letter. This makes it easier to spot errors in case you would miss `new` keyword.
 
+Although worth mentioning that creating objects with function constructors is going away because of new methods and ES6
 ### Built-in Function Constructors
 - An example built-in function constructors are:
+JavaScript has some built it function constructors like: `new Number(3)` and `new String('Jason')`.
 
+These constructors look like you're creating primitives but you are not. You are creating objects.
+
+When you use some methods like `.length` on a string, your string is boxed in a `String` object automatically to get access to all its methods.
+ 
+Although it doesn't work like that for numbers and you would need to create `Number` object first.
+It's best to avoid using built-in function constructors to create primitives because you're not creating primitives but rather objects.
+All these built-in function constructors have a prototype and you can actually add your own methods to it.
 ```JavaScript
 var a = new Number('3');
 
@@ -1128,7 +1142,7 @@ constructor, when you use for ... in, the additional functionality
 gets triggered even if it was not explicitly called.
 - This is because the for ... in gets every property in the object, regardless
 if it is directly on the object itself, or on the prototype of the object.
-
+For arrays use standard `for` loop or `forEach`, but don't use `for in`. Because arrays are objects with `for in` you could iterate into a prototype.
 ```JavaScript
 Array.prototype.myCustomFeature = 'cool';
 
@@ -1186,6 +1200,7 @@ john.lastname = 'Doe';
 console.log(john);
 ```
 
+
 ### ES6 and Classes
 - Classes in JavaScript are actually objects. When you create a new object from
 a class in JavaScript, you're actually creating an object from an object.
@@ -1193,3 +1208,87 @@ a class in JavaScript, you're actually creating an object from an object.
 prototype of an object to another object.
 - ***Syntactic Sugar*** is just a different way to type something that doesn't
 change how it works under the hood.
+## 60 - ES6 and Classes
+JavaScript has classes in ES6. However, it is not like a `class` in other languages. In other languages `class` is like a template. `class` in JS is an object by itself that you use to create other objects.
+
+`class` doesn't change anything how objects and prototypes work under the hood. It just gives you a different way to type. Because of it you may hear JavaScript classes being called syntactic sugar.
+
+**Syntactic sugar** - a different way to type something that doesn't change how it works under the hood.
+
+## 61 - Initialization
+Large arrays of objects are useful for testing and initialization before you have an actual data to pull from, like a JSON file.
+
+## 62 - `typeof`, `instanceof`, and Figuring Out What Something Is
+**`typeof`** is an operator (essentially a function) that excepts a parameter and returns a string.
+
+**`instanceof`** will tell you if it has something in its prototype chain by returning a boolean.
+
+```javascript
+var a = 3;
+console.log(typeof a); // returns a string 'number'
+
+var b = "Hello";
+console.log(typeof b); // returns a string 'string'
+
+var c = {};
+console.log(typeof c); // returns a string 'object'
+
+var d = [];
+console.log(typeof d); // also returns a string 'object', weird!
+
+console.log(Object.prototype.toString.call(d)); // this little trick returns a string '[object Array]'
+
+function Person(name) {
+    this.name = name;
+}
+var e = new Person('Jane');
+console.log(typeof e); // also an object
+
+console.log(e instanceof Person); // returns true because Person is down the prototype chain of e
+
+console.log(typeof undefined); // returns undefined, makes sense
+console.log(typeof null); // returns an 'object', a bug since, like, forever... 
+
+var z = function() { };
+console.log(typeof z); // returns a 'function'
+```
+
+## 63 - Strict Mode
+JavaScript is a more liberal of what it allows.
+
+**`"use strict";`** - enforces more strict rules. E.g. in this mode you must declare var first to use it. In not strict mode if you forget to type `var`, it will still be created on the global object `window`.
+
+You can use use strict at the top of the document or at the top of a function to use strict only inside it's execution context.
+
+## 64 - Learning From Other's Good Code
+There are many aspects of improving as a developer. One of the most powerful is learning from other's good code. There is a fantastic treasure trove of good code out there to learn from. Tony calls it "an open source education".
+
+It may sound as fun as reading an encyclopedia, but you don't need to spend hours reading the source code. Find some area that's interesting to you. Don't get intimidated by famous libraries and what may seems complex patterns. Look at the structure, see what you could take away and imitate.
+
+This is a great way to learn advanced patterns and concepts in JavaScript. So make a practice to occasionally look at the source code of the library or framework you're using.
+
+## 65 - Deep Dive into Source Code jQuery - Part 1
+When we're reading code we are not trying to understand how every feature is implemented. First, we'll try to see if we can read the code and learn how it is structured. And if we can learn some techniques and borrow some ideas.
+
+## 66 - Deep Dive into Source Code jQuery - Part 2
+jQuery has some good code you could borrow for your own projects. It has been developed and watched by many developers so it has some of the best methods and practices.
+
+Inside jQuery there is Sizzle CSS Selector library for handling selectors.
+
+## 67 - Deep Dive into Source Code jQuery - Part 3
+**Method chaining** - calling one method after another, and each method affects the parent object.
+
+So `obj.method1().method2()` where both methods end up with `this` variable pointing at `obj`.
+
+## 68 - Requirements
+First of all, before building any application let's think of the requirements. What this app/library should do?
+
+## 73 - Good Commenting
+Remember to write good comments for your code. Because even if you are the sole developer for a project you may need to come back after a year and you'll have to figure it out how everything works like it was someone else's code.
+
+## 76 - TypeScript, ES6, and Transpiled Languages
+**Transpile** - convert the syntax of one programming language, to another.
+
+In this case, languages that don't really ever run anywhere, but instead are processed by transpilers that generate JavaScript.
+
+**TypeScript** - one of the most popular transpiled languages and is created by Microsoft. The biggest difference that it uses strict types for its variables instead of dynamic types like JavaScript.
