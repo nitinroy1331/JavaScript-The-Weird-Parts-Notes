@@ -56,17 +56,16 @@ Below is a list of notes made for the course JavaScript: The Weird Parts.
 ### Syntax Parser
 - A program that reads your code and determines what it does, and if the
 grammar/syntax is valid.
--When you write JavaScript it isn't directly telling computer what to do. You're writing code, but then someone else built programs that convert your JS into something that computer can understand. Those programs are called compilers or interpreters.**Compilers** go character by character and translate your code into a set of instructions. Important to understand is that during that process programmers who wrote that compiler can choose to do extra stuff. Your code is not what actually is given to a computer but a translation of it.
+-When you write JavaScript it isn't directly telling computer what to do. You're writing code, but then someone else built programs that convert your JS into something that computer can understand. Those programs are called compilers or interpreters.
+- Compilers go character by character and translate your code into a set of instructions. Important to understand is that during that process programmers who wrote that compiler **can choose to do extra stuff**. Your code is not what actually is given to a computer but a translation of it.
 
 ### Lexical Environment
 - Where something sits physically in the code you write, the positioning, where
-is it contained and what surrounds it. In JavaScript where you write something is important.
+is it contained and what surrounds it.In JavaScript where you write something is important.
 
 ### Execution Context wrapper to help manage the code that is running.
 -There are lots of lexical environments, areas of the code that you look at physically, but which one is currently running is managed via execution contexts.
-- Execution context contains your running code, but it can also contain things beyond what you've written in your code. Because remember that your code is being translated by a syntax parser.
-- The environment of the code being executed.
-- Basically the scope of the code.
+- Execution context contains your running code, but it can also contain things beyond what you've written in your code  because remember that your code is being translated by a syntax parser.Basically the scope of the code.
 - An example:
 ```JavaScript
 // global context
@@ -79,19 +78,20 @@ function a() {
 ```
 ## 1.2 Conceptual Aside - Name-Value Pairs and Objects
 ### Name/Value Pair
-- A name which maps to a unique value, can be defined more than once, but can
-have only one value in any given execution context
 
 ### Object
-- A collection of Name/Value pairs, a function also counts as a value
-- If the value is a primitive, it's called a property.
-- If the value is a function, it's called a method.
+- A collection of **Name/Value pairs**, a function also counts as a value.
+- A name which maps to a unique value, can be defined more than once, but can have only one value in any given execution context
+- If the value is a primitive, it's called a **property**. & If the value is a function, it's called a **method**.
 ## 3.The Global Environment and The Global Object
-**Global execution context** - the base execution context. It creates global object and special variable called `this`. In a browser `this` global object is `window`.
+
+**Global execution context** - the base execution context. It creates global object and special variable called `this` . In a browser `this` global object is `window`.
 
 ### Hoisting
-- Memory space is allocated for functions and variables, but variables are not
-yet defined. All values in JS are set initially to **undefined**.
+- When parser runs through code it recognizes where you created variables and functions and it sets up memory space for them. So before your code begins to be executed, JS engine has already set aside memory space for all the variables and functions you created. When the code begins to execute line by line it can access it.
+
+- However, for variables JS engine puts a placeholder `undefined`, because it doesn't know what it's value will ultimately end up being until it starts executing that line of
+code.
 - Avoid using hoisting. Always declared methods and variables before using them because of the way JS works, you can write in your code a call to a function before an actual function and it will execute without any errors. 
 
 ```javascript
@@ -102,10 +102,7 @@ function b() {
 }
 ```
 
-When parser runs through code it recognizes where you created variables and functions and it sets up memory space for them. So before your code begins to be executed, JS engine has already set aside memory space for all the variables and functions you created. When the code begins to execute line by line it can access it.
 
-However, for variables JS engine puts a placeholder `undefined`, because it doesn't know what it's value will ultimately end up being until it starts executing that line of
-code.
  
 ```javascript
 console.log(a);
@@ -122,31 +119,25 @@ var a = 'Hello World!';
 
 ### JavaScript is single threaded, synchronous execution
 **Single threaded**
-- - JavaScript is a single threaded, synchronous language. That means one command execution at a time. Maybe not under the hood of the browser but from our perspective as programmers it is single threaded.Means that it can only execute one instruction at a time in the order that it appears.
+- JavaScript is a single threaded, synchronous language. That means one command execution at a time. Maybe not under the hood of the browser but from our perspective as programmers it is single threaded.Means that it can only execute one instruction at a time in the order that it appears.
 - Asynchronous events are also actually handled synchronously.
 **Synchronous execution** - means one at a time and in order that it appears. 
 
 ## 1.3 Function Invocation and the Execution Stack
 **Invocation** - running or calling a function by using parenthesis `()`.
+
 ### Execution Stack
--every time you invoke a function a new execution context is created for that function and is put on top of execution stack.
-- When the script is run, the global execution context is created, and is
-executed.
-- However, if there is another function invocation, it will stop at that line
-of code, and create and execute the execution context.
+-Every time you invoke a function a new execution context is created for that function and is put on top of execution stack.When the script is run, the global execution context is created, and is executed. However, if there is another function invocation, it will stop at that line of code, and create and execute the execution context.
+
 # - Functions, Context, and Variable Environments
 **Variable environments** - where the variables live and how they relate to each other in memory. Every execution context has its own variable environment.
 
 ## 1.4 The Scope Chain
 
-- If the variable is not found inside the execution context, it will search for
-the variable inside the outer lexical environment. If it is not found inside
-the inside the outer lexical environment, then it will go up the scope chain
-until it finds the variable, or when it reached the global execution context.
-- Note that just because your execution context is on top of another in the
-scope chain, it does not mean that it the one on the bottom is necessarily its
-parent.
-- An example:So in this example `myVar` would actualy log `1` even though it sits inside a function which is inside another. `myVar` sits in the outer global environment so JS will go down the scope chain until it finds it.
+- If the variable is not found inside the execution context, it will search for the variable inside the outer lexical environment. If it is not found inside the inside the outer lexical environment, then it will go up the scope chain until it finds the variable, or when it reached the global execution context.
+- Note that just because your execution context is on top of another in the scope chain, it does not mean that it the one on the bottom is necessarily its parent.
+- An example:
+So in this example `myVar` would actualy log `1` even though it sits inside a function which is inside another. `myVar` sits in the outer global environment so JS will go down the scope chain until it finds it.
 
 ```JavaScript
 // global context
@@ -172,20 +163,16 @@ a();
 
 **`let`** - allows JS engine block scoping. During execution context that variable is still placed in memory and set to `undefined`, however, you're not allowed to use it until the line of code is run during the execution phase. So if you try to use a variable before, you'll get an error. Also, it is declared within a block. A block is usually defined by `{}` (function, if statement etc). So if you're running `let` inside a loop a new variable will be placed in memory after each iteration.
 
-
 ## 1.6 What About Asynchronous Callbacks
 What About Asynchronous Callbacks
 **Asynchronous** - executed more than one at a time. What is happening inside JS engine is synchronous. Its just the browser is putting things asynchronously in the event queue.
 
 **Event queue** - events like click and others are placed in the queue. And this queue starts to get processed in the order it happened only when execution stack is empty.
 
-
 ## 2.1 Types and Operators
 ### Dynamic Typing
-- The type of variable does not need to be defined, it is automatically
-determined in runtime.
-- The variables can hold different types of values, and the data stored can
-even be changed after the variable is declared.
+- The type of variable does not need to be defined, it is automatically determined in runtime.
+- The variables can hold different types of values, and the data stored can even be changed after the variable is declared.
 
 ### Primitive Type
 - A type of data that represents a single value.
@@ -199,25 +186,24 @@ even be changed after the variable is declared.
     - ***boolean*** is either *true* or *false*
   4. Number
     - A ***number*** is a floating point number. There is only one type of floating type number inside JavaScript.
-  5. String
-     - A ***String*** is a sequence of characters, and single quotes and double quotes can both be used to contain strings.
-    6. Symbol
-      - A ***symbol*** is used in ES6
+    
+  5. String :
+  ***String*** is a sequence of characters, and single quotes and double quotes can both be used to contain strings.
+  
+  6. ***Symbol*** is used in ES6
 
 ### Operator
-- A **special function** that is syntactically different.. Generally operators take two parameters and return result.
-- JavaScript operators are infix notations.
-- Operators are actually just functions.
+- A **special function** that is syntactically different.. Generally operators take two parameters and return result. ----    - Operators are actually just functions.
 
 ### Operator Precedence
  which operator function gets called first on the same line of code. Functions are called in order of precedence (higher precedence wins).
-
 
 ### Associativity
 - Decides what order operator functions get called, be it left-to-right , or
 right-to-left if they have same level of precedence
 - [Mozilla Developer Network on Associativity](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Operator_Precedence#Associativity)
-## 21 - Conceptual Aside Coercion
+
+## 2.2 - Conceptual Aside Coercion
 - **Coercion** is converting a value from one data type to another.
 - Also known as type casting.
 This happens quite often in JavaScript because it's dynamically typed. For example adding a number to a string would result in number being converted to a string:
