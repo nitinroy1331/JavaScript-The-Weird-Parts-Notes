@@ -64,7 +64,7 @@ grammar/syntax is valid.
 is it contained and what surrounds it.In JavaScript where you write something is important.
 
 ### Execution Context wrapper to help manage the code that is running.
--There are lots of lexical environments, areas of the code that you look at physically, but which one is currently running is managed via execution contexts.
+- There are lots of lexical environments, areas of the code that you look at physically, but which one is currently running is managed via execution contexts.
 - Execution context contains your running code, but it can also contain things beyond what you've written in your code  because remember that your code is being translated by a syntax parser.Basically the scope of the code.
 - An example:
 ```JavaScript
@@ -127,7 +127,7 @@ var a = 'Hello World!';
 **Invocation** - running or calling a function by using parenthesis `()`.
 
 ### Execution Stack
--Every time you invoke a function a new execution context is created for that function and is put on top of execution stack.When the script is run, the global execution context is created, and is executed. However, if there is another function invocation, it will stop at that line of code, and create and execute the execution context.
+- Every time you invoke a function a new execution context is created for that function and is put on top of execution stack.When the script is run, the global execution context is created, and is executed. However, if there is another function invocation, it will stop at that line of code, and create and execute the execution context.
 
 # - Functions, Context, and Variable Environments
 **Variable environments** - where the variables live and how they relate to each other in memory. Every execution context has its own variable environment.
