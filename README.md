@@ -316,7 +316,7 @@ Since `firstName` doesn't exist on person object, we create it using brackets op
 Dot is an operator that works from left to right. It allows to access or set an object's properties.
 
 ## 27 - Objects and Object Literals
-Object literal syntax is more clean and preferred way to create objects.
+**Object literal syntax is more clean and preferred way to create objects.**
 
 ```javascript
 var Jason = { 
@@ -350,33 +350,20 @@ JSON and Object Literals
 ### First Class Functions
 **First class functions** - everything you can do with other types you can do with functions. Assign them to variables, pass them around as parameters to other functions, you can create functions on the fly.
 
-Just like any object, function object resides in memory. Though, it's a special type of object because it has all the features of a normal object but has some other special properties. It's hidden special properties:
+- Just like any object, function object resides in memory. Though, it's a special type of object because it has all the features of a normal object but has some other special properties. It's hidden special properties:
 
 **Name** - though it can be anonymous ant not have a name.
 
 **Code property** - where the actual lines of code sit.
 
-The code that you write gets placed in the special property of the function object. So it isn't like the code you write *is* a function. The function *is* an object with other properties. And the code that you write is just one of those properties that you're adding onto it. What is special about that property that it's invocable. You can say run that code and that's when execution context creation and execution happens.
+- The code that you write gets placed in the special property of the function object. So it isn't like the code you write *is* a function. The function *is* an object with other properties. And the code that you write is just one of those properties that you're adding onto it. What is special about that property that it's invocable. You can say run that code and that's when execution context creation and execution happens.
 
-It's important that you have this mental model of functions in your mind. You have to think of functions as objects whose code just happens to be one of the properties. 
+- It's important that you have this mental model of functions in your mind. You have to think of functions as objects whose code just happens to be one of the properties. 
 There are other things that functions can have attached to it. And it can be moved around and copied just like other object.
 
-You have to think about **functions as more than just containers of code**.
-- You can do everything to them that you can do with other types.
-- E.g.
-  - Being assigned to a variable
-  - Passed around as an argument
-  - Being created on the fly
-- In JavaScript, a function is actually a special type of object, hence, we can
-attach additional functions, variables, and even objects to it.
-- Functions also have some hidden special properties:
-  - ***name***: The name is optional, the function can be anonymous.
-  - ***code***: The code inside the function is actually stored inside a code
-  variable, this code variable is actually invocable.
-- A function is actually just an object, whose code just happens to be one of
-the properties attached to the object.
-
-### Expression vs Statement**Expression** - a unit of code that results in a value. Statements just do work, bet expressions end up creating value. That value doesn't necessarily have to be saved to a variable.
+### Expression vs Statement**Expression**
+- a unit of code that results in a value. Statements just do work, but expressions end up creating value.
+- That value doesn't necessarily have to be saved to a variable.
 
 E.g. `1 + 2` is a function expression that return a value of `3`. Do you remember how we covered that `+` operator is a function?
 
@@ -412,9 +399,8 @@ Conceptual Aside By Value vs By Reference
 
 ```javascript
 var a = 3; b = a;
-``` 
-
-When you set `b` equals to `a`, equals operator sees these are primitives creates a new spot in memory and makes a copy of it. `b` and `a` will be both `3` but they are copies sitting on separate spots in memory. So if I change `a = 5` it doesn't affect `b`, it is still `3`, because after making a copy these values are on their own.
+```
+- When you set `b` equals to `a`, equals operator sees these are primitives creates a new spot in memory and makes a copy of it. `b` and `a` will be both `3` but they are copies sitting on separate spots in memory. So if I change `a = 5` it doesn't affect `b`, it is still `3`, because after making a copy these values are on their own.
 
 **By reference** (all objects including functions):
 
@@ -423,11 +409,9 @@ var c = {greetings: 'hi'};
 var d;
 d = c;
 ```
-Equals operator sees there is an object so it simply points to the same spot in memory.
-
+-Equals operator sees there is an object so it simply points to the same spot in memory.
 After changing a value of an object: `c.greetings = 'hello'` `d` would change as well.
-
-**Mutate** means change something.
+ - **Mutate** means change something.
 
 ### Objects, Functions, and 'this'
 - When a function is invoked, a new execution context is invoked. When the
@@ -437,19 +421,12 @@ the execution stack. That determines how the code is executed.
   1. Variable Environment
   2. Outer Environment
   3. '***this***'
-- The '***this***' keyword can point to different objects, and that depends on
-where the function is and where it's called.
+- **The 'this' keyword can point to different objects, and that depends on where the function is and where it's called**
 - When you're simply invoking a function, the ***this*** keyword inside will
 always point to the global object, the **Window** object.
 - If you're invoking a method inside a object, the ***this*** keyword will
 point to the object itself.
-- However, the '***this***' keyword when used inside a function inside a method
-inside an object, will point back to the global object.
-`this` inside a function points to global object.
-
-`this` inside a method points to that object from which it is called. Left of the dot rule.
-
-But `this` inside a function which is inside a method will point to the global object.
+- However, the '***this***' keyword when used inside a function inside a method inside an object, will point back to the global object.
 
 With ES5 JavaScript using `var` you could solve this by setting inside a method `var _this = this;` which is a very common pattern.
 
@@ -470,21 +447,15 @@ var c = {
 c.log();
 
 ```
-
 ### 'arguments' and REST
  Arrays  - Collections of Anything
 **Arrays** can hold a mix of anything: functions, primitives, objects.
 
 **Arguments** are the parameters you pass to a function. JS creates a keyword of the same name which is an array-like that contains all parameters that you passed.
-
 In ES6 we can do: `function greet(firstname, ...other)` and `other` will be an array that contains the rest of the arguments.
+- When an execution context is created, JavaScript creates the variable environment, outer environment, this, and ***arguments***.
+- The rest operator takes the arguments that aren't defined specifically, and get wrapped into an array.
 
-- When an execution context is created, JavaScript creates the variable
-environment, outer environment, this, and ***arguments***.
-- The ***arguments*** variable is actually an array, and it contains all the
-arguments that you have passed to the function.
-- The rest operator takes the arguments that aren't defined specifically, and
-get wrapped into an array.
 ##  - Framework Aside Function Overloading
 You can call one function which inside calls another function with a certain set of parameters.
 
@@ -492,15 +463,13 @@ You can call one function which inside calls another function with a certain set
 JavaScript engine is syntax parser in the browser.
 
 ##  - Dangerous Aside Automatic Semicolon Insertion
-Semicolons are optional in JS because JS engine injects them automatically.
-But it is a bad practice to not put them because you want to know what code you are writing.
+Semicolons are optional in JS because JS engine injects them automatically. But it is a bad practice to not put them because you want to know what code you are writing.
 
 ## - Framework Aside Whitespace
 **Whitespace** - invisible characters that create space in your code: returns, tabs, space.
 
 ### Immediately Invoked Function Expressions (IIFE)s
-- IIFEs are function expressions that are immediately invoked once they are
-declared.
+- IIFEs are function expressions that are immediately invoked once they are declared.
 - An example:
 
 ```JavaScript
@@ -522,19 +491,16 @@ var greeting = function(name) {
 }('Adam');
 console.log(greeting);
 
-/*
-Using an anonymous IIFE, by using the parentheses
-This is because JavaScript treats everything inside parentheses as
-expressions. This way you're telling JS that you're not creating a new
-statement, but creating a new expression instead.
-*/
 
+// anonymous function 
 (function(name) {
   console.log('Hello ' + name);
 }('Adam'));
 ```
-- By wrapping code in an IIFE, we can ensure that our code does not pollute
-the global namespace. (Like in any other normal function)
+- Using an anonymous IIFE, by **using the parentheses**
+This is because JavaScript treats everything inside parentheses as expressions. This way you're telling JS that you're not creating a new statement, but creating a new expression instead.
+
+- **By wrapping code in an IIFE** , we can ensure that our code does not pollute the global namespace. (Like in any other normal function)**
 
 Framework Aside IIFEs and Safe Code
 **IIFE** creates a new execution context so it's safe code because it is wrapped in separate execution context and prevents variable names collision.
@@ -563,7 +529,7 @@ We describe this proccess as execution context has closed in outer variables.
 - A ***closure*** is the combination of a function and the lexical environment
 within which that function was declared.
 - It refers to a function having access to variables that it would normally
-would have access to, even though the execution context containing those
+wouldn't have access to, even though the execution context containing those
 variables is now gone.
 - In short, ***closures*** make sure that the scope of a method will always be
 intact, regardless of when or where you invoke a function. They make sure a
