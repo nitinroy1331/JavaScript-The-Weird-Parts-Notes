@@ -211,43 +211,8 @@ This happens quite often in JavaScript because it's dynamically typed. For examp
 7 + '7'// would be = '77'
  ```
 ### Short Circuiting
-- Because logical expressions are evaluated from left to right, they are tested
-for possible '**short-circuit**' evaluation using the following rules:
-  - ***false*** && (anything) is short-circuit evaluated to ***false***
-  - ***true*** || (anything) is short-circuit evaluated to ***true***
-  - If the statement is evaluated to ***true***, the last operand will be
-  executed.
-- An example:
+F I N D N O T E S
 
-```JavaScript
-3 === 3 && 'cow' && console.log('chicken');
-
-// Chicken will be logged to the console because if the condition is true,
-// the last operand will be executed.
-```
-- This is particularly useful when used in functions, because it allows for
-default parameters.
-
-```JavaScript
-function greet(name) {
-  name && console.log('Hi, ' + name + '!');
-}
-
-greet('Sam');
-```
-- However, you should take note that if you pass in a **falsey** value, such as
-***undefined***, ***null***, or ***0***, the conditional statement will still
-evaluate to false, even if you have passed something in.
-
-```JavaScript
-function plusOne(num) {
-  num = num || 1;
-  return num + 1;
-}
-
-// This statement will return 2, if you pass in a falsey value such as 0
-plusOne(0);
-```
 ## 2.2 - Comparison Operators
 When `true` is coerced to number it is `1`.
 
@@ -352,7 +317,7 @@ JSON and Object Literals
 
 - Just like any object, function object resides in memory. Though, it's a special type of object because it has all the features of a normal object but has some other special properties. It's hidden special properties:
 
-**Name** - though it can be anonymous ant not have a name.
+**Name** - though it can be anonymous anD not have a name.
 
 **Code property** - where the actual lines of code sit.
 
@@ -409,7 +374,7 @@ var c = {greetings: 'hi'};
 var d;
 d = c;
 ```
--Equals operator sees there is an object so it simply points to the same spot in memory.
+- Equals operator sees there is an object so it simply points to the same spot in memory.
 After changing a value of an object: `c.greetings = 'hello'` `d` would change as well.
  - **Mutate** means change something.
 
@@ -454,7 +419,7 @@ c.log();
 **Arguments** are the parameters you pass to a function. JS creates a keyword of the same name which is an array-like that contains all parameters that you passed.
 In ES6 we can do: `function greet(firstname, ...other)` and `other` will be an array that contains the rest of the arguments.
 - When an execution context is created, JavaScript creates the variable environment, outer environment, this, and ***arguments***.
-- The rest operator takes the arguments that aren't defined specifically, and get wrapped into an array.
+- The rest ... operator takes the arguments that aren't defined specifically, and get wrapped into an array.
 
 ##  - Framework Aside Function Overloading
 You can call one function which inside calls another function with a certain set of parameters.
