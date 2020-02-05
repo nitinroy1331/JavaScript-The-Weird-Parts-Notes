@@ -475,6 +475,7 @@ You can reference to global object by passing `window` as a parameter.
 ### Closures
 When a function runs and completes it is removed from execution stack, but variables created and saved in that execution phase are still stored in memory and can be accessed from down the scope.
 
+
 ```javascript
 function greet(whattosay) {
 
@@ -491,31 +492,10 @@ sayHi('Jason');
 Inside the variable `sayHi` we run `greet` function which returns another function and passes string `'Hi'`. After that functions is finished and it is popped from the execution stack. But `whattosay` variable still sits saved in the memory with a value `Hi`. So when we call function `sayHi` it will go in the outer environment and look for whattosay variable and will find it and log "Hi Jason".
 We describe this proccess as execution context has closed in outer variables.
 
-- A ***closure*** is the combination of a function and the lexical environment
-within which that function was declared.
-- It refers to a function having access to variables that it would normally
-wouldn't have access to, even though the execution context containing those
-variables is now gone.
-- In short, ***closures*** make sure that the scope of a method will always be
-intact, regardless of when or where you invoke a function. They make sure a
-function runs the way it's supposed to.
-- E.g.
+- A ***closure*** is the combination of a function and the lexical environment within which that function was declared.
+- It refers to a function having access to variables that it would normally wouldn't have access to, even though the execution context containing those variables is now gone.
+- In short, ***closures*** make sure that the scope of a method will always be intact, regardless of when or where you invoke a function. They make sure a function runs the way it's supposed to.
 
-```JavaScript
-function greet(whattosay) {
-  return function(name) {
-    console.log(whattosay + '' + name);
-  }
-}
-
-var sayHi = greet('Hi');
-
-/*
-The sayHi method still has access to the whattosay variable, even though
-the execution context of greet no longer exists. This is automatically
-done by JavaScript.
-
-*/
 sayHi('Tony');
 ```
 
@@ -623,37 +603,7 @@ greetSpanish('John', 'Doa');
 ```
 
 ### Callback Functions and Closures
-- A callback function, is a function that you pass to another function, to be
-run when the other function is finished.
-- An example:
-
-```JavaScript
-function sayHiLater() {
-  var greeting = 'Hi';
-
-  setTimeout(function() {
-    console.log(greeting);
-  }, 3000);
-}
-
-sayHiLater();
-```
-- But this does not work:
-
-```JavaScript
-function sayHiLater(callback) {
-  var greeting = 'Hi';
-
-  setTimeout(callback, 3000);
-}
-
-sayHiLater(function() {
-  console.log(greeting);
-});
-```
-- This is because the function is actually declared outside the function, and
-since it's parent execution context is not **sayHiLater**, it cannot access
-the variable greeting.
+ n o t e s 
 
 ### Call, Apply, and Bind
 - The Function is just another special kind of object, it has the following
@@ -677,18 +627,21 @@ Because functions are objects, all functions have access to built-in `call()`, `
 In practice, you can use `call()` and `apply()` to borrow methods/functions from objects and use on another object with the same property names.
 
 **Function currying** - creating a copy of a function but with some preset parameters.
-- Bind is used when you want to change the reference of this for a function
+- Bind is used when you want to change the reference of `this` for a function
 - It creates a copy of your function, and whatever object you pass to the bind
 method, becomes the object that the '***this***' keyword points to.
+
 - The ***call*** function also lets you decide what the **this** variable will
 be. The first argument for ***call*** should be what the **this** variable
 should refer to. The rest of the arguments passed to it are the arguments
 that you will normally pass to a function.
 - The difference between the ***bind*** and the ***call*** method is that the
 ***call*** method actually executes the method.
+
 - The ***call*** method and the ***apply*** method perform the same actions,
 but the ***call*** method accepts the arguments directly in the parentheses,
 whereas the ***apply*** method accepts the arguments in an array format.
+
 - A use for **apply** and **call** would be function borrowing.
 - Function borrowing is used to reduce redundant code, by using functions from
 an object on another object.
